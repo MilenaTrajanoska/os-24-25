@@ -1,0 +1,26 @@
+services:
+  frontend:
+    image: nginx
+    volumes:
+    - "./frontend:/usr/share/nginx/html"
+    ports:
+    - 80:80
+    networks:
+      - my-private-net
+
+  backend:
+    build: ./backend
+    ports:
+    - 8080:8080
+    volumes:
+      - data_volume:/usr/src/app/data
+    networks:
+      - my-private-net
+
+volumes:
+  data_volume: {}
+
+networks:
+  my-private-net: {
+    driver: bridge
+  }

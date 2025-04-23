@@ -1,0 +1,35 @@
+services:
+  example-service-1:
+    build: ./ex1
+    ports:
+      - "5001:5001"
+    networks:
+      - my-network-1
+
+  example-service-2:
+    build: ./ex2
+    ports:
+      - "3000:3000"
+    environment:
+      - PERSISTING_FILE_PATH=${PERSISTING_FILE_PATH}
+    volumes:
+      - "some_volume:/usr/src/myapp/data"
+    networks:
+      - my-network-1
+      - private-network-2
+    depends_on:
+      - example-service-3
+
+  example-service-3:
+    build: ./ex3
+    ports:
+      - "8000:8000"
+    networks:
+      - private-network-2
+
+volumes:
+  some_volume: {}
+
+networks:
+  my-network-1: {}
+  private-network-2: {}
