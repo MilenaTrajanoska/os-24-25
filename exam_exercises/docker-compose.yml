@@ -1,0 +1,32 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    environment:
+      - LOG_FILE_PATH=data/logs.txt
+    ports:
+      - 7391:7391
+    volumes:
+      - serverlogs:/app/server/data/
+    networks:
+      - client-server-net
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    environment:
+      - NUMBERS_FILE_PATH=numbers.txt
+    networks:
+      - client-server-net
+    depends_on:
+     - server
+
+volumes:
+  serverlogs: {}
+
+networks:
+  client-server-net: {
+    driver: bridge
+  }

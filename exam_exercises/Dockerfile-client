@@ -1,0 +1,6 @@
+FROM eclipse-temurin
+WORKDIR /app/client
+COPY Client.java .
+COPY numbers.txt .
+RUN javac Client.java
+CMD ["java", "Client"]

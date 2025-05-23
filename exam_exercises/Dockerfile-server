@@ -1,0 +1,8 @@
+FROM eclipse-temurin
+WORKDIR /app/server
+COPY Server.java .
+COPY Worker.java .
+RUN mkdir data
+RUN javac Server.java
+RUN javac Worker.java
+CMD ["java", "Server"]
